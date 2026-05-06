@@ -1,0 +1,35 @@
+/* ============================================================
+   variables.css — Tokens de diseño globales
+   Edita aquí para cambiar colores, fuentes o espaciados
+   en toda la página de una sola vez.
+   ============================================================ */
+
+:root {
+  /* ── Paleta ──────────────────────────────────────────── */
+  --tierra:  #c9622f;   /* naranja-barro   → botones primarios */
+  --arena:   #f4efe6;   /* beige cálido    → secciones claras  */
+  --selva:   #2d5a3d;   /* verde oscuro    → sección experiencias */
+  --ocre:    #e8a44a;   /* ámbar           → acentos y badges  */
+  --noche:   #1a1510;   /* casi negro      → fondo navbar/footer */
+  --bruma:   #7a8b7c;   /* gris-verde      → textos secundarios */
+  --blanco:  #fdfaf5;   /* blanco cálido   → fondo principal   */
+
+  /* Hover de botón primario */
+  --tierra-dark: #a84e22;
+
+  /* ── Tipografía ──────────────────────────────────────── */
+  --f-display: 'Playfair Display', Georgia, serif;
+  --f-body:    'DM Sans', sans-serif;
+
+  /* ── Espaciado ───────────────────────────────────────── */
+  --section-padding: 6rem 3rem;
+  --max-width: 1200px;
+
+  /* ── Bordes y radios ─────────────────────────────────── */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+
+  /* ── Sombras ─────────────────────────────────────────── */
+  --shadow-card: 0 16px 40px rgba(26, 21, 16, 0.15);
+}

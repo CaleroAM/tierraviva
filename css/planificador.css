@@ -1,0 +1,167 @@
+/* ============================================================
+   planificador.css — Formulario de planificación en 3 pasos
+   ============================================================ */
+
+#planifica {
+  background: var(--arena);
+  padding: var(--section-padding);
+}
+
+.plan-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ── Indicador de pasos ──────────────────────────────────── */
+/* Heurística #1 — Visibilidad del estado del sistema:
+   El usuario ve exactamente en qué paso está y cuántos
+   pasos faltan. El ✓ confirma los pasos ya completados. */
+.plan-steps {
+  display: flex;
+  gap: 0;
+  margin: 3rem 0 2.5rem;
+  border-bottom: 2px solid rgba(26, 21, 16, 0.1);
+}
+.plan-step {
+  padding: 0.8rem 1.8rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bruma);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.plan-step.active {
+  color: var(--tierra);
+  border-bottom-color: var(--tierra);
+}
+.plan-step.done {
+  color: var(--selva);
+}
+.plan-step.done::before {
+  content: '✓ ';
+}
+
+/* ── Formulario ──────────────────────────────────────────── */
+.plan-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.form-group.full {
+  grid-column: span 2;
+}
+.form-group label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #5a4f42;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: var(--blanco);
+  border: 1.5px solid rgba(26, 21, 16, 0.15);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  font-family: var(--f-body);
+  font-size: 0.95rem;
+  color: var(--noche);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--tierra);
+}
+
+/* Heurística #5 — Prevención de errores:
+   Los hints informan al usuario qué se espera antes
+   de que cometa un error, no después. */
+.form-hint {
+  font-size: 0.72rem;
+  color: var(--bruma);
+  line-height: 1.4;
+}
+
+/* Heurística #9 — Recuperarse de errores:
+   Mensajes claros, en lenguaje natural, junto al campo
+   problemático. El ⚠ añade señal visual sin ser agresivo. */
+.form-error {
+  font-size: 0.75rem;
+  color: #c0392b;
+  display: none;
+  gap: 0.3rem;
+  align-items: center;
+}
+.form-error.show {
+  display: flex;
+}
+
+/* ── Acciones del formulario ─────────────────────────────── */
+.plan-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+/* Heurística #3 — Control y libertad del usuario:
+   El botón Cancelar/Atrás siempre está visible para
+   que el usuario pueda salir o corregir sin esfuerzo. */
+.btn-back {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: var(--f-body);
+  font-size: 0.85rem;
+  color: var(--bruma);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: color 0.2s;
+}
+.btn-back:hover {
+  color: var(--noche);
+}
+
+/* Resumen paso 3 */
+.plan-resumen {
+  background: var(--blanco);
+  border: 1.5px solid rgba(26, 21, 16, 0.1);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  margin-top: 1rem;
+}
+.plan-resumen h3 {
+  font-family: var(--f-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.plan-resumen p {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: #5a4f42;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .plan-form {
+    grid-template-columns: 1fr;
+  }
+  .form-group.full {
+    grid-column: span 1;
+  }
+}

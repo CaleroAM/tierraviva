@@ -1,0 +1,86 @@
+/* ============================================================
+   navbar.css — Barra de navegación fija
+   ============================================================ */
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 3rem;
+  background: rgba(26, 21, 16, 0.88);
+  backdrop-filter: blur(10px);
+  transition: background 0.3s;
+}
+
+/* Logo */
+.nav-logo {
+  font-family: var(--f-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ocre);
+  letter-spacing: 0.03em;
+}
+.nav-logo span {
+  color: var(--blanco);
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* Links */
+.nav-links {
+  display: flex;
+  gap: 2.4rem;
+  list-style: none;
+}
+.nav-links a {
+  color: rgba(253, 250, 245, 0.78);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  position: relative;
+}
+
+/* Línea animada bajo cada link */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: var(--ocre);
+  transition: width 0.3s;
+}
+.nav-links a:hover {
+  color: var(--ocre);
+}
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* Heurística #1 — Visibilidad del estado:
+   La sección activa se resalta para que el usuario
+   sepa en qué parte de la página se encuentra. */
+.nav-links a.active {
+  color: var(--ocre);
+}
+.nav-links a.active::after {
+  width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  nav {
+    padding: 1rem 1.5rem;
+  }
+  .nav-links {
+    display: none; /* En móvil se ocultaría con un menú hamburguesa */
+  }
+}

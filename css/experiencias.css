@@ -1,0 +1,63 @@
+/* ============================================================
+   experiencias.css — Sección de tipos de experiencia
+   ============================================================ */
+
+#experiencias {
+  background: var(--selva);
+  color: var(--blanco);
+  padding: var(--section-padding);
+}
+
+.exp-wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+.exp-wrap .section-sub  { color: rgba(253, 250, 245, 0.65); }
+.exp-wrap .section-label { color: var(--ocre); }
+
+.exp-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.exp-card {
+  background: rgba(253, 250, 245, 0.06);
+  border: 1px solid rgba(253, 250, 245, 0.12);
+  border-radius: var(--radius-md);
+  padding: 2rem 1.5rem;
+  transition: background 0.2s;
+}
+.exp-card:hover {
+  background: rgba(253, 250, 245, 0.1);
+}
+.exp-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--tierra);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 1.2rem;
+}
+.exp-title {
+  font-family: var(--f-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+.exp-text {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: rgba(253, 250, 245, 0.65);
+}
+
+@media (max-width: 1024px) {
+  .exp-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .exp-grid { grid-template-columns: 1fr; }
+}

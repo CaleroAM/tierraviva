@@ -1,0 +1,270 @@
+/* ============================================================
+   base.css — Reset y estilos globales
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+/* ── Reset ───────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--blanco);
+  color: var(--noche);
+  font-family: var(--f-body);
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ── Utilidades de sección ───────────────────────────────── */
+.section-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--tierra);
+  margin-bottom: 0.8rem;
+  font-weight: 500;
+}
+
+.section-title {
+  font-family: var(--f-display);
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+.section-sub {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #5a4f42;
+  max-width: 52ch;
+}
+
+/* ── Botones ─────────────────────────────────────────────── */
+.btn-primary {
+  background: var(--tierra);
+  color: var(--blanco);
+  padding: 0.85rem 2rem;
+  border: none;
+  cursor: pointer;
+  font-family: var(--f-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  transition: background 0.2s, transform 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.btn-primary:hover {
+  background: var(--tierra-dark);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--noche);
+  padding: 0.85rem 2rem;
+  border: 1.5px solid var(--noche);
+  cursor: pointer;
+  font-family: var(--f-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  transition: background 0.2s, color 0.2s;
+}
+.btn-secondary:hover {
+  background: var(--noche);
+  color: var(--blanco);
+}
+
+/* ── Skip link (accesibilidad) ───────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  background: var(--tierra);
+  color: var(--blanco);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: top 0.2s;
+  z-index: 1000;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* ── Tooltip (Heurística #10 ayuda contextual) ───────────── */
+[data-tip] {
+  position: relative;
+}
+[data-tip]::before {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--noche);
+  color: var(--blanco);
+  font-size: 0.72rem;
+  white-space: nowrap;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-sm);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  z-index: 50;
+}
+[data-tip]:hover::before {
+  opacity: 1;
+}
+
+/* ── Barra de progreso (Heurística #1 visibilidad de estado) */
+.status-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 200;
+  background: var(--tierra);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.1s linear;
+}
+
+/* ── Toast / Notificación (Heurística #1) ────────────────── */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--selva);
+  color: var(--blanco);
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transform: translateY(120%);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  z-index: 300;
+  max-width: 340px;
+}
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+.toast-icon {
+  font-size: 1.2rem;
+}
+.toast-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: rgba(253, 250, 245, 0.6);
+  cursor: pointer;
+  font-size: 1rem;
+  transition: color 0.2s;
+}
+.toast-close:hover {
+  color: var(--blanco);
+}
+
+/* ── Modal (Heurística #3 control del usuario) ───────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 21, 16, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.modal {
+  background: var(--blanco);
+  border-radius: var(--radius-lg);
+  width: 90%;
+  max-width: 640px;
+  max-height: 85vh;
+  overflow-y: auto;
+  transform: translateY(20px);
+  transition: transform 0.3s;
+}
+.modal-overlay.open .modal {
+  transform: translateY(0);
+}
+.modal-header {
+  padding: 2rem 2rem 1rem;
+  border-bottom: 1px solid rgba(26, 21, 16, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.modal-title {
+  font-family: var(--f-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+.modal-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.3rem;
+  color: var(--bruma);
+  transition: color 0.2s;
+  padding: 0.2rem;
+}
+.modal-close:hover {
+  color: var(--noche);
+}
+.modal-body {
+  padding: 1.5rem 2rem 2rem;
+}
+.modal-body p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #4a3f42;
+}
+
+/* ── Responsive global ───────────────────────────────────── */
+@media (max-width: 768px) {
+  :root {
+    --section-padding: 4rem 1.5rem;
+  }
+}

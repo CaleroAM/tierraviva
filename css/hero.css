@@ -1,0 +1,209 @@
+/* ============================================================
+   hero.css — Sección principal (Hero) y buscador rápido
+   ============================================================ */
+
+/* ── Hero ────────────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+}
+
+/* Panel izquierdo: imagen / media */
+.hero-media {
+  position: relative;
+  background: #2d2419;
+}
+
+.hero-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  background: linear-gradient(160deg, #2d5a3d 0%, #1a3a28 40%, #0e1f16 100%);
+  position: relative;
+  overflow: hidden;
+}
+.hero-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.hero-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 70% at 70% 40%, rgba(201, 98, 47, 0.25) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 50% at 20% 80%, rgba(232, 164, 74, 0.15) 0%, transparent 60%);
+}
+
+/* Etiqueta de imagen sugerida */
+.img-tag {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  background: rgba(253, 250, 245, 0.12);
+  border: 1px solid rgba(253, 250, 245, 0.2);
+  backdrop-filter: blur(6px);
+  color: rgba(253, 250, 245, 0.7);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-sm);
+}
+
+/* Panel derecho: contenido textual */
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 7rem 4rem 4rem 5rem;
+  background: var(--blanco);
+  position: relative;
+}
+
+.hero-eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--tierra);
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.hero-title {
+  font-family: var(--f-display);
+  font-size: clamp(2.8rem, 4.5vw, 4.5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  color: var(--noche);
+  margin-bottom: 1.5rem;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--tierra);
+}
+
+.hero-sub {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #4a3f34;
+  max-width: 38ch;
+  margin-bottom: 2.5rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Indicador de scroll */
+.scroll-cue {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--bruma);
+}
+.scroll-line {
+  width: 40px;
+  height: 1px;
+  background: var(--bruma);
+}
+
+/* ── Buscador rápido ─────────────────────────────────────── */
+/* Heurística #6 — Reconocer antes que recordar:
+   Los campos muestran opciones precargadas en lugar de
+   obligar al usuario a escribir o recordar valores válidos. */
+
+.search-bar {
+  background: var(--noche);
+}
+.search-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  align-items: stretch;
+}
+.search-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1.4rem 1.8rem;
+  border-right: 1px solid rgba(253, 250, 245, 0.1);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.search-field:hover {
+  background: rgba(253, 250, 245, 0.05);
+}
+.search-field label {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ocre);
+  font-weight: 500;
+}
+.search-field select,
+.search-field input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--blanco);
+  font-family: var(--f-body);
+  font-size: 0.95rem;
+  cursor: pointer;
+  width: 100%;
+}
+.search-field select option {
+  background: var(--noche);
+}
+.search-submit {
+  background: var(--tierra);
+  border: none;
+  color: var(--blanco);
+  padding: 0 2rem;
+  cursor: pointer;
+  font-family: var(--f-body);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.search-submit:hover {
+  background: var(--tierra-dark);
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+  .hero-media {
+    display: none;
+  }
+  .search-inner {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 768px) {
+  .hero-content {
+    padding: 6rem 1.5rem 3rem;
+  }
+}

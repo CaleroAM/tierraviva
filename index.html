@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TierraViva — Descubre los destinos más increíbles de México. Turismo responsable, cultura, naturaleza y aventura." />
+  <title>TierraViva — Turismo en México</title>
+
+  <!-- ── Estilos ─────────────────────────────────────────── -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/hero.css" />
+  <link rel="stylesheet" href="css/destinos.css" />
+  <link rel="stylesheet" href="css/experiencias.css" />
+  <link rel="stylesheet" href="css/planificador.css" />
+  <link rel="stylesheet" href="css/galeria.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+</head>
+<body>
+
+  <!-- Accesibilidad: saltar al contenido -->
+  <a class="skip-link" href="#destinos">Ir al contenido principal</a>
+
+  <!-- Heurística #1: barra de progreso de lectura -->
+  <div class="status-bar" id="statusBar" role="progressbar" aria-label="Progreso de lectura"></div>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       NAVBAR
+       ════════════════════════════════════════════════════ -->
+  <nav role="navigation" aria-label="Navegación principal">
+    <div class="nav-logo">Tierra<span>Viva</span></div>
+
+    <ul class="nav-links">
+      <li><a href="#inicio"        class="active">Inicio</a></li>
+      <li><a href="#destinos">Destinos</a></li>
+      <li><a href="#experiencias">Experiencias</a></li>
+      <li><a href="#planifica">Planifica</a></li>
+      <li><a href="#mapa">Mapa</a></li>
+      <li><a href="#galeria">Galería</a></li>
+    </ul>
+
+    <!-- Heurística #10: acceso a ayuda siempre visible -->
+    <button
+      class="btn-secondary"
+      style="padding:0.55rem 1.2rem; font-size:0.78rem;"
+      onclick="openHelp()"
+      data-tip="Centro de ayuda"
+      aria-label="Abrir ayuda">
+      ¿Necesitas ayuda?
+    </button>
+  </nav>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       HERO
+       ════════════════════════════════════════════════════ -->
+  <header class="hero" id="inicio">
+
+    <!-- Panel de imagen (izquierda) -->
+    <div class="hero-media" aria-hidden="true">
+      <div class="hero-placeholder">
+        <img src="img/hero.jpg" alt="Cenote en la selva de México" />
+      </div>
+      <span class="img-tag">📸 img/hero.jpg</span>
+    </div>
+
+    <!-- Panel de contenido (derecha) -->
+    <div class="hero-content">
+      <p class="hero-eyebrow">Turismo en México</p>
+      <h1 class="hero-title">
+        Descubre la<br>
+        <em>tierra más viva</em><br>
+        del mundo
+      </h1>
+      <p class="hero-sub">
+        Playas de cristal, selvas milenarias, ciudades con historia y
+        sabores que se quedan para siempre. México es más que un destino —
+        es una experiencia que transforma.
+      </p>
+      <div class="hero-actions">
+        <a href="#destinos" class="btn-primary">Explorar destinos →</a>
+        <a href="#planifica" class="btn-secondary">Planifica tu viaje</a>
+      </div>
+      <div class="scroll-cue" aria-hidden="true">
+        <div class="scroll-line"></div>
+        <span>Desplaza para explorar</span>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       BUSCADOR RÁPIDO
+       Heurística #6: opciones visibles, no hay que recordar
+       ════════════════════════════════════════════════════ -->
+  <div class="search-bar" role="search" aria-label="Busca tu próximo destino">
+    <div class="search-inner">
+
+      <div class="search-field">
+        <label for="sf-destino">¿A dónde quieres ir?</label>
+        <select id="sf-destino" aria-label="Selecciona un destino">
+          <option>Cualquier destino</option>
+          <option>Oaxaca</option>
+          <option>Yucatán</option>
+          <option>Ciudad de México</option>
+          <option>Guerrero</option>
+          <option>Chiapas</option>
+        </select>
+      </div>
+
+      <div class="search-field">
+        <label for="sf-fecha">¿Cuándo viajas?</label>
+        <input type="month" id="sf-fecha" aria-label="Mes de viaje" />
+      </div>
+
+      <div class="search-field">
+        <label for="sf-tipo">Tipo de experiencia</label>
+        <select id="sf-tipo" aria-label="Tipo de experiencia">
+          <option>Todas las experiencias</option>
+          <option>Naturaleza y aventura</option>
+          <option>Cultura y patrimonio</option>
+          <option>Playas y relax</option>
+          <option>Gastronomía</option>
+        </select>
+      </div>
+
+      <button class="search-submit" onclick="handleSearch()" aria-label="Buscar destinos">
+        <span aria-hidden="true">🔍</span> Buscar
+      </button>
+
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       DESTINOS
+       Heurísticas #4, #6
+       ════════════════════════════════════════════════════ -->
+  <section id="destinos" aria-labelledby="destinos-titulo">
+    <div class="dest-header">
+      <div>
+        <p class="section-label">Explora México</p>
+        <h2 class="section-title" id="destinos-titulo">Destinos destacados</h2>
+      </div>
+
+      <!-- Heurística #6: filtros visibles sin necesidad de recordar categorías -->
+      <div class="dest-filters" role="group" aria-label="Filtrar destinos por categoría">
+        <button class="filter-chip active" onclick="filterDest(this,'todos')"    aria-pressed="true">Todos</button>
+        <button class="filter-chip"        onclick="filterDest(this,'naturaleza')" aria-pressed="false">Naturaleza</button>
+        <button class="filter-chip"        onclick="filterDest(this,'cultura')"   aria-pressed="false">Cultura</button>
+        <button class="filter-chip"        onclick="filterDest(this,'playa')"     aria-pressed="false">Playa</button>
+      </div>
+    </div>
+
+    <div class="dest-grid" id="destGrid">
+
+      <!-- Oaxaca — tarjeta grande -->
+      <article
+        class="dest-card"
+        onclick="openModal('oaxaca')"
+        role="button" tabindex="0"
+        aria-label="Ver detalles de Oaxaca"
+        data-cat="cultura">
+        <div class="dest-img">
+          <div class="dest-img-inner pal-oaxaca">
+            <img src="img/oaxaca.jpg" alt="Calles coloniales de Oaxaca" />
+          </div>
+          <div class="dest-overlay"></div>
+        </div>
+        <!-- Heurística #4: badge con diseño consistente en todas las tarjetas -->
+        <span class="dest-badge">⭐ Top destino</span>
+        <div class="dest-info">
+          <p class="dest-region">Sur · Oaxaca</p>
+          <h3 class="dest-name">Oaxaca</h3>
+          <p class="dest-desc">Artesanía, mezcal y Monte Albán — donde la historia precolombina vive en cada calle.</p>
+        </div>
+      </article>
+
+      <!-- Yucatán -->
+      <article
+        class="dest-card"
+        onclick="openModal('yucatan')"
+        role="button" tabindex="0"
+        aria-label="Ver detalles de Yucatán"
+        data-cat="playa naturaleza">
+        <div class="dest-img">
+          <div class="dest-img-inner pal-yucatan">
+            <img src="img/yucatan.jpg" alt="Cenote turquesa en Yucatán" />
+          </div>
+          <div class="dest-overlay"></div>
+        </div>
+        <span class="dest-badge">🌊 Naturaleza</span>
+        <div class="dest-info">
+          <p class="dest-region">Sureste · Yucatán</p>
+          <h3 class="dest-name">Yucatán</h3>
+          <p class="dest-desc">Cenotes sagrados y la majestuosa Chichén Itzá.</p>
+        </div>
+      </article>
+
+      <!-- Ciudad de México -->
+      <article
+        class="dest-card"
+        onclick="openModal('cdmx')"
+        role="button" tabindex="0"
+        aria-label="Ver detalles de Ciudad de México"
+        data-cat="cultura">
+        <div class="dest-img">
+          <div class="dest-img-inner pal-cdmx">
+            <img src="img/cdmx.jpeg" alt="Skyline de Ciudad de México de noche" />
+          </div>
+          <div class="dest-overlay"></div>
+        </div>
+        <span class="dest-badge">🏛 Cultura</span>
+        <div class="dest-info">
+          <p class="dest-region">Centro · CDMX</p>
+          <h3 class="dest-name">Ciudad de México</h3>
+          <p class="dest-desc">Museos de talla mundial, gastronomía y vida nocturna.</p>
+        </div>
+      </article>
+
+      <!-- Guerrero -->
+      <article
+        class="dest-card"
+        onclick="openModal('guerrero')"
+        role="button" tabindex="0"
+        aria-label="Ver detalles de Guerrero"
+        data-cat="playa">
+        <div class="dest-img">
+          <div class="dest-img-inner pal-guerrero">
+            <img src="img/guerrero.jpg" alt="Bahía turquesa en Zihuatanejo" />
+          </div>
+          <div class="dest-overlay"></div>
+        </div>
+        <span class="dest-badge">🏖 Playa</span>
+        <div class="dest-info">
+          <p class="dest-region">Pacífico · Guerrero</p>
+          <h3 class="dest-name">Guerrero</h3>
+          <p class="dest-desc">Zihuatanejo y sus bahías de aguas perfectas.</p>
+        </div>
+      </article>
+
+      <!-- Chiapas -->
+      <article
+        class="dest-card"
+        onclick="openModal('chiapas')"
+        role="button" tabindex="0"
+        aria-label="Ver detalles de Chiapas"
+        data-cat="naturaleza">
+        <div class="dest-img">
+          <div class="dest-img-inner pal-chiapas">
+            <img src="img/chiapas.jpeg" alt="Cascadas de Agua Azul en Chiapas" />
+          </div>
+          <div class="dest-overlay"></div>
+        </div>
+        <span class="dest-badge">🌿 Naturaleza</span>
+        <div class="dest-info">
+          <p class="dest-region">Sureste · Chiapas</p>
+          <h3 class="dest-name">Chiapas</h3>
+          <p class="dest-desc">Cascadas turquesa, selva lacandona y San Cristóbal de las Casas.</p>
+        </div>
+      </article>
+
+    </div><!-- /dest-grid -->
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       EXPERIENCIAS
+       ════════════════════════════════════════════════════ -->
+  <section id="experiencias" aria-labelledby="exp-titulo">
+    <div class="exp-wrap">
+      <p class="section-label">Lo que te espera</p>
+      <h2 class="section-title" id="exp-titulo">Tipos de experiencias</h2>
+      <p class="section-sub">Desde el mar hasta las montañas, México tiene todo lo que buscas — y más.</p>
+
+      <div class="exp-grid">
+        <div class="exp-card">
+          <div class="exp-icon" aria-hidden="true">🏛</div>
+          <h3 class="exp-title">Cultura y patrimonio</h3>
+          <p class="exp-text">Zonas arqueológicas, museos y fiestas declaradas Patrimonio de la Humanidad.</p>
+        </div>
+        <div class="exp-card">
+          <div class="exp-icon" aria-hidden="true">🌊</div>
+          <h3 class="exp-title">Mar y aventura</h3>
+          <p class="exp-text">Buceo en cenotes, surf, kayak y playas de arena blanca a lo largo de dos costas.</p>
+        </div>
+        <div class="exp-card">
+          <div class="exp-icon" aria-hidden="true">🌿</div>
+          <h3 class="exp-title">Ecoturismo</h3>
+          <p class="exp-text">Selvas, sierras y barrancas: más del 10% de la biodiversidad del planeta.</p>
+        </div>
+        <div class="exp-card">
+          <div class="exp-icon" aria-hidden="true">🍴</div>
+          <h3 class="exp-title">Gastronomía</h3>
+          <p class="exp-text">Cocina mexicana reconocida por la UNESCO — tacos, mole, mezcal y mucho más.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       PLANIFICADOR
+       Heurísticas #1, #3, #5, #7, #9
+       ════════════════════════════════════════════════════ -->
+  <section id="planifica" aria-labelledby="plan-titulo">
+    <div class="plan-wrap">
+      <p class="section-label">Tu próximo viaje</p>
+      <h2 class="section-title" id="plan-titulo">Planifica tu itinerario</h2>
+      <p class="section-sub">Cuéntanos qué buscas y te ayudamos a armar el viaje perfecto.</p>
+
+      <!-- Heurística #1: indicador de pasos — el usuario siempre sabe en qué etapa está -->
+      <div class="plan-steps" role="tablist" aria-label="Pasos del planificador">
+        <div class="plan-step active done" role="tab" aria-selected="true"  id="step1">1. Destino</div>
+        <div class="plan-step"            role="tab" aria-selected="false" id="step2">2. Fechas</div>
+        <div class="plan-step"            role="tab" aria-selected="false" id="step3">3. Confirmar</div>
+      </div>
+
+      <!-- ── Panel 1: Destino ── -->
+      <div id="panel1" role="tabpanel" aria-labelledby="step1">
+        <div class="plan-form">
+
+          <div class="form-group">
+            <label for="p-nombre">Nombre completo</label>
+            <input
+              type="text" id="p-nombre"
+              placeholder="Ej. Ana García"
+              aria-required="true"
+              autocomplete="name" />
+            <!-- Heurística #9: mensaje de error claro y descriptivo -->
+            <span class="form-error" id="err-nombre" role="alert">
+              ⚠ Por favor ingresa tu nombre completo.
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="p-email">Correo electrónico</label>
+            <input
+              type="email" id="p-email"
+              placeholder="correo@ejemplo.com"
+              aria-required="true"
+              autocomplete="email" />
+            <span class="form-error" id="err-email" role="alert">
+              ⚠ Ingresa un correo válido (ej. nombre@dominio.com).
+            </span>
+            <!-- Heurística #5: hint que previene el error antes de que ocurra -->
+            <span class="form-hint">Recibirás tu itinerario en este correo.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="p-destino">Destino</label>
+            <select id="p-destino" aria-required="true">
+              <option value="">— Selecciona un destino —</option>
+              <option>Oaxaca</option>
+              <option>Yucatán</option>
+              <option>Ciudad de México</option>
+              <option>Guerrero</option>
+              <option>Chiapas</option>
+            </select>
+            <span class="form-error" id="err-destino" role="alert">
+              ⚠ Elige al menos un destino para continuar.
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="p-viajeros">Número de viajeros</label>
+            <!-- Heurística #5: min/max previenen valores imposibles -->
+            <input
+              type="number" id="p-viajeros"
+              min="1" max="20" placeholder="1"
+              aria-describedby="hint-viajeros" />
+            <span class="form-hint" id="hint-viajeros">Entre 1 y 20 personas.</span>
+          </div>
+
+          <div class="form-group full">
+            <label for="p-intereses">¿Qué te interesa?</label>
+            <textarea id="p-intereses" rows="3"
+              placeholder="Playas, ruinas, gastronomía, aventura…"></textarea>
+          </div>
+
+        </div><!-- /plan-form -->
+
+        <div class="plan-actions">
+          <!-- Heurística #3: salida de emergencia visible en todo momento -->
+          <button class="btn-back" onclick="resetForm()" aria-label="Cancelar y limpiar formulario">
+            ← Cancelar
+          </button>
+          <!-- Heurística #7: botón principal destacado como atajo visual -->
+          <button class="btn-primary" onclick="validateStep1()" data-tip="Avanzar al siguiente paso">
+            Siguiente paso →
+          </button>
+        </div>
+      </div><!-- /panel1 -->
+
+      <!-- ── Panel 2: Fechas ── -->
+      <div id="panel2" style="display:none" role="tabpanel" aria-labelledby="step2">
+        <div class="plan-form">
+          <div class="form-group">
+            <label for="p-llegada">Fecha de llegada</label>
+            <input type="date" id="p-llegada" aria-required="true" />
+          </div>
+          <div class="form-group">
+            <label for="p-salida">Fecha de salida</label>
+            <input type="date" id="p-salida" aria-required="true" />
+            <span class="form-hint">La estancia mínima recomendada es de 3 noches.</span>
+          </div>
+        </div>
+        <div class="plan-actions">
+          <button class="btn-back" onclick="goStep(1)" aria-label="Volver al paso anterior">← Atrás</button>
+          <button class="btn-primary" onclick="goStep(3)">Revisar y confirmar →</button>
+        </div>
+      </div><!-- /panel2 -->
+
+      <!-- ── Panel 3: Confirmación ── -->
+      <div id="panel3" style="display:none" role="tabpanel" aria-labelledby="step3">
+        <div class="plan-resumen">
+          <h3>Resumen de tu solicitud</h3>
+          <p id="resumen">—</p>
+        </div>
+        <div class="plan-actions">
+          <button class="btn-back" onclick="goStep(2)">← Modificar</button>
+          <button class="btn-primary" onclick="submitForm()">✓ Enviar solicitud</button>
+        </div>
+      </div><!-- /panel3 -->
+
+    </div><!-- /plan-wrap -->
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       MAPA
+       Heurística #2: lenguaje familiar (nombres reales)
+       ════════════════════════════════════════════════════ -->
+  <section id="mapa" aria-labelledby="mapa-titulo">
+    <div class="mapa-wrap">
+      <p class="section-label">Geografía</p>
+      <h2 class="section-title" id="mapa-titulo">México en el mapa</h2>
+
+      <div class="mapa-illustration" aria-label="Mapa ilustrativo de México con destinos marcados">
+        <span aria-hidden="true">🗺</span>
+        <span>Mapa interactivo de México</span>
+        <small style="opacity:0.4; font-size:0.7rem; letter-spacing:0.08em;">
+          Pasa el cursor sobre un punto para ver el destino
+        </small>
+
+        <!-- Heurística #2: tooltips con nombres conocidos, no coordenadas -->
+        <div class="map-dot" style="top:55%;left:32%" data-name="Ciudad de México"   tabindex="0" aria-label="Ciudad de México"></div>
+        <div class="map-dot" style="top:65%;left:55%" data-name="Oaxaca"             tabindex="0" aria-label="Oaxaca"></div>
+        <div class="map-dot" style="top:50%;left:67%" data-name="Yucatán / Mérida"   tabindex="0" aria-label="Yucatán"></div>
+        <div class="map-dot" style="top:58%;left:28%" data-name="Guerrero"           tabindex="0" aria-label="Guerrero"></div>
+        <div class="map-dot" style="top:62%;left:60%" data-name="Chiapas"            tabindex="0" aria-label="Chiapas"></div>
+        <div class="map-dot" style="top:28%;left:18%" data-name="Baja California"    tabindex="0" aria-label="Baja California"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       GALERÍA
+       ════════════════════════════════════════════════════ -->
+  <section id="galeria" aria-labelledby="galeria-titulo">
+    <div class="galeria-wrap">
+      <p class="section-label">Galería</p>
+      <h2 class="section-title" id="galeria-titulo">México en imágenes</h2>
+      <p class="section-sub">Una pequeña muestra de los colores que te esperan.</p>
+
+      <div class="galeria-grid" role="list">
+
+        <div class="gal-item" role="listitem">
+          <div class="gal-ph g1">
+            <img src="img/gal-oaxaca.jpg" alt="Mercado de Oaxaca" />
+          </div>
+          <div class="gal-label"><span class="gal-text">Mercados de Oaxaca</span></div>
+        </div>
+
+        <div class="gal-item" role="listitem">
+          <div class="gal-ph g2">
+            <img src="img/gal-teotihuacan.jpg" alt="Pirámide de Teotihuacán" />
+          </div>
+          <div class="gal-label"><span class="gal-text">Teotihuacán</span></div>
+        </div>
+
+        <div class="gal-item" role="listitem">
+          <div class="gal-ph g3">
+            <img src="img/gal-cenote.jpg" alt="Cenote cristalino en Yucatán" />
+          </div>
+          <div class="gal-label"><span class="gal-text">Cenotes de Yucatán</span></div>
+        </div>
+
+        <div class="gal-item" role="listitem">
+          <div class="gal-ph g4">
+            <img src="img/gal-barrancas.jpg" alt="Barrancas del Cobre en Chihuahua" />
+          </div>
+          <div class="gal-label"><span class="gal-text">Barrancas del Cobre</span></div>
+        </div>
+
+        <div class="gal-item" role="listitem">
+          <div class="gal-ph g5">
+            <img src="img/gal-guanajuato.jpg" alt="Calles coloridas de Guanajuato" />
+          </div>
+          <div class="gal-label"><span class="gal-text">Guanajuato</span></div>
+        </div>
+
+        <div class="gal-item" role="listitem">
+          <div class="gal-ph g6">
+            <img src="img/gal-pacifico.jpeg" alt="Costa del Pacífico mexicano al atardecer" />
+          </div>
+          <div class="gal-label"><span class="gal-text">Costa Pacífico</span></div>
+        </div>
+
+        <div class="gal-item" role="listitem">
+          <div class="gal-ph g7">
+            <img src="img/gal-muertos.jpg" alt="Altar del Día de Muertos" />
+          </div>
+          <div class="gal-label"><span class="gal-text">Día de Muertos</span></div>
+        </div>
+
+      </div><!-- /galeria-grid -->
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       FOOTER
+       ════════════════════════════════════════════════════ -->
+  <footer>
+    <div class="footer-top">
+
+      <div class="footer-brand">
+        <div class="nav-logo">Tierra<span>Viva</span></div>
+        <p>Promovemos el turismo responsable y sostenible en México, conectando viajeros con la riqueza cultural y natural del país.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Destinos</h4>
+        <ul>
+          <li><a href="#destinos">Oaxaca</a></li>
+          <li><a href="#destinos">Yucatán</a></li>
+          <li><a href="#destinos">Ciudad de México</a></li>
+          <li><a href="#destinos">Chiapas</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Experiencias</h4>
+        <ul>
+          <li><a href="#experiencias">Cultura</a></li>
+          <li><a href="#experiencias">Naturaleza</a></li>
+          <li><a href="#experiencias">Gastronomía</a></li>
+          <li><a href="#experiencias">Aventura</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Ayuda</h4>
+        <ul>
+          <li><a href="#" onclick="openHelp()">Preguntas frecuentes</a></li>
+          <li><a href="#planifica">Planifica tu viaje</a></li>
+          <li><a href="#">Contacto</a></li>
+          <li><a href="#">Privacidad</a></li>
+        </ul>
+      </div>
+
+    </div><!-- /footer-top -->
+
+    <div class="footer-bottom">
+      <span>© 2025 TierraViva · Promoviendo el turismo en México</span>
+      <span>Hecho con 🌮 en México</span>
+    </div>
+  </footer>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       COMPONENTES GLOBALES
+       ════════════════════════════════════════════════════ -->
+
+  <!-- Toast (Heurística #1: feedback de acciones) -->
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <span class="toast-icon" id="toastIcon">✓</span>
+    <span id="toastMsg">Mensaje</span>
+    <button class="toast-close" onclick="closeToast()" aria-label="Cerrar notificación">✕</button>
+  </div>
+
+  <!-- Modal de destino (Heurística #3: control del usuario) -->
+  <div
+    class="modal-overlay"
+    id="modalOverlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modalTitle"
+    tabindex="-1">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">Destino</h2>
+        <!-- Heurística #3: botón de salida claramente visible -->
+        <button class="modal-close" onclick="closeModalDirect()" aria-label="Cerrar ventana">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+
+  <!-- ── Scripts (type="module" para usar imports entre archivos) ── -->
+  <script type="module" src="js/navbar.js"></script>
+  <script type="module" src="js/ui.js"></script>
+  <script type="module" src="js/destinos.js"></script>
+  <script type="module" src="js/planificador.js"></script>
+
+</body>
+</html>
