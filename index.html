@@ -16,6 +16,9 @@
   <link rel="stylesheet" href="css/planificador.css" />
   <link rel="stylesheet" href="css/galeria.css" />
   <link rel="stylesheet" href="css/footer.css" />
+
+  <!-- ── Leaflet CSS ─────────────────────────────────────── -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
 
@@ -311,7 +314,7 @@
       <h2 class="section-title" id="plan-titulo">Planifica tu itinerario</h2>
       <p class="section-sub">Cuéntanos qué buscas y te ayudamos a armar el viaje perfecto.</p>
 
-      <!-- Heurística #1: indicador de pasos — el usuario siempre sabe en qué etapa está -->
+      <!-- Heurística #1: indicador de pasos -->
       <div class="plan-steps" role="tablist" aria-label="Pasos del planificador">
         <div class="plan-step active done" role="tab" aria-selected="true"  id="step1">1. Destino</div>
         <div class="plan-step"            role="tab" aria-selected="false" id="step2">2. Fechas</div>
@@ -329,7 +332,6 @@
               placeholder="Ej. Ana García"
               aria-required="true"
               autocomplete="name" />
-            <!-- Heurística #9: mensaje de error claro y descriptivo -->
             <span class="form-error" id="err-nombre" role="alert">
               ⚠ Por favor ingresa tu nombre completo.
             </span>
@@ -345,7 +347,6 @@
             <span class="form-error" id="err-email" role="alert">
               ⚠ Ingresa un correo válido (ej. nombre@dominio.com).
             </span>
-            <!-- Heurística #5: hint que previene el error antes de que ocurra -->
             <span class="form-hint">Recibirás tu itinerario en este correo.</span>
           </div>
 
@@ -366,7 +367,6 @@
 
           <div class="form-group">
             <label for="p-viajeros">Número de viajeros</label>
-            <!-- Heurística #5: min/max previenen valores imposibles -->
             <input
               type="number" id="p-viajeros"
               min="1" max="20" placeholder="1"
@@ -383,11 +383,9 @@
         </div><!-- /plan-form -->
 
         <div class="plan-actions">
-          <!-- Heurística #3: salida de emergencia visible en todo momento -->
           <button class="btn-back" onclick="resetForm()" aria-label="Cancelar y limpiar formulario">
             ← Cancelar
           </button>
-          <!-- Heurística #7: botón principal destacado como atajo visual -->
           <button class="btn-primary" onclick="validateStep1()" data-tip="Avanzar al siguiente paso">
             Siguiente paso →
           </button>
@@ -430,7 +428,7 @@
 
 
   <!-- ════════════════════════════════════════════════════════
-       MAPA
+       MAPA — Leaflet.js (sin API key, tiles de CARTO)
        Heurística #2: lenguaje familiar (nombres reales)
        ════════════════════════════════════════════════════ -->
   <section id="mapa" aria-labelledby="mapa-titulo">
@@ -438,42 +436,7 @@
       <p class="section-label">Geografía</p>
       <h2 class="section-title" id="mapa-titulo">México en el mapa</h2>
 
-      <div class="mapa-illustration" aria-label="Mapa ilustrativo de México con destinos marcados">
-        <svg viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg"
-             style="width:100%;height:100%;position:absolute;inset:0">
-          <defs>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="blur"/>
-              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-          </defs>
-          <!-- Silueta simplificada de México -->
-          <path d="M80,80 L160,60 L240,55 L310,65 L370,50 L420,60 L460,80 L490,70
-                   L520,90 L530,130 L510,160 L490,180 L480,220 L500,260 L520,290
-                   L510,320 L490,340 L460,350 L430,360 L400,370 L370,365 L340,350
-                   L320,330 L300,310 L270,300 L240,310 L210,330 L190,320 L170,300
-                   L160,270 L140,250 L120,240 L100,220 L85,200 L70,170 L65,140 Z"
-                fill="rgba(45,90,61,0.5)" stroke="rgba(232,164,74,0.4)" stroke-width="1.5"/>
-          <!-- Península de Baja California -->
-          <path d="M65,140 L50,160 L40,200 L35,240 L30,280 L40,300 L55,280 L60,250 L70,220 L80,200 L85,180 Z"
-                fill="rgba(45,90,61,0.4)" stroke="rgba(232,164,74,0.3)" stroke-width="1"/>
-          <!-- Península de Yucatán -->
-          <path d="M490,180 L520,170 L540,185 L545,210 L530,230 L510,240 L495,225 L490,205 Z"
-                fill="rgba(45,90,61,0.5)" stroke="rgba(232,164,74,0.4)" stroke-width="1"/>
-        </svg>
-      
-        <!-- Puntos interactivos -->
-        <div class="map-dot" style="top:52%;left:32%" data-name="Ciudad de México"   tabindex="0" aria-label="Ciudad de México"></div>
-        <div class="map-dot" style="top:65%;left:50%" data-name="Oaxaca"             tabindex="0" aria-label="Oaxaca"></div>
-        <div class="map-dot" style="top:48%;left:67%" data-name="Yucatán / Mérida"   tabindex="0" aria-label="Yucatán"></div>
-        <div class="map-dot" style="top:60%;left:26%" data-name="Guerrero"           tabindex="0" aria-label="Guerrero"></div>
-        <div class="map-dot" style="top:63%;left:57%" data-name="Chiapas"            tabindex="0" aria-label="Chiapas"></div>
-        <div class="map-dot" style="top:28%;left:10%" data-name="Baja California"    tabindex="0" aria-label="Baja California"></div>
-      
-        <small style="position:absolute;bottom:1rem;opacity:0.35;font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;">
-          Pasa el cursor sobre un punto para ver el destino
-        </small>
-      </div>
+      <div id="leaflet-map" aria-label="Mapa interactivo de México con destinos marcados"></div>
     </div>
   </section>
 
@@ -623,11 +586,58 @@
   </div>
 
 
-  <!-- ── Scripts (type="module" para usar imports entre archivos) ── -->
+  <!-- ── Scripts de la app ────────────────────────────────── -->
   <script type="module" src="js/navbar.js"></script>
   <script type="module" src="js/ui.js"></script>
   <script type="module" src="js/destinos.js"></script>
   <script type="module" src="js/planificador.js"></script>
+
+  <!-- ── Leaflet JS ───────────────────────────────────────── -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    // Inicializar mapa centrado en México
+    const map = L.map('leaflet-map', {
+      center: [23.6, -102.5],
+      zoom: 5,
+      zoomControl: true,
+      scrollWheelZoom: false   // evita scroll accidental al pasar por la sección
+    });
+
+    // Tiles oscuros de CARTO (sin API key)
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 19
+    }).addTo(map);
+
+    // Icono personalizado con la paleta de TierraViva
+    const iconoTV = L.divIcon({
+      className: '',
+      html: '<div style="width:12px;height:12px;background:#e8a44a;border-radius:50%;box-shadow:0 0 0 5px rgba(232,164,74,0.25);cursor:pointer;"></div>',
+      iconSize:   [12, 12],
+      iconAnchor: [6, 6],
+      popupAnchor:[0, -10]
+    });
+
+    // Destinos con coordenadas reales
+    const destinos = [
+      { nombre: 'Ciudad de México', coords: [19.43, -99.13],  desc: 'Museos, gastronomía y vida nocturna' },
+      { nombre: 'Oaxaca',           coords: [17.06, -96.72],  desc: 'Mezcal, artesanías y Monte Albán' },
+      { nombre: 'Yucatán / Mérida', coords: [20.97, -89.62],  desc: 'Cenotes y Chichén Itzá' },
+      { nombre: 'Guerrero',         coords: [17.55, -99.50],  desc: 'Zihuatanejo y playas del Pacífico' },
+      { nombre: 'Chiapas',          coords: [16.75, -93.11],  desc: 'Cascadas, selva y San Cristóbal' },
+      { nombre: 'Baja California',  coords: [30.84, -115.28], desc: 'Desierto, vino y mar de Cortés' },
+    ];
+
+    destinos.forEach(d => {
+      L.marker(d.coords, { icon: iconoTV })
+        .addTo(map)
+        .bindPopup(
+          `<strong>${d.nombre}</strong><br><span style="color:rgba(253,250,245,0.6);font-size:0.78rem;">${d.desc}</span>`,
+          { closeButton: false, className: 'mapa-popup', maxWidth: 200 }
+        );
+    });
+  </script>
 
 </body>
 </html>
