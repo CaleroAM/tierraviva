@@ -16,7 +16,8 @@
 
 .mapa-illustration {
   margin-top: 3rem;
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(45, 90, 61, 0.15);
+  border: 1px solid rgba(232, 164, 74, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-lg);
   height: 420px;
